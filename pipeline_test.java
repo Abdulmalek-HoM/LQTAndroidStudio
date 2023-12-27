@@ -69,15 +69,15 @@ public class pipeline_test extends OpenCvPipeline {
     // here add the rectangles for each side of the spike marks so the image will be a little more limited for the camera to read
     // please do input the size of the rectangles here instead of the 0's, as they will cover the size of the team prop
     final Rect leftSpike = new Rect(
-            new Point(110, 300),
-            new Point(330,500)
+            new Point(100, 300),
+            new Point(300,500)
     );
     final Rect midSpike = new Rect(
-            new Point(420, 300),
-            new Point(650,500)
+            new Point(500, 300),
+            new Point(700,500)
     );
     final Rect rightSpike = new Rect(
-            new Point(750, 300),
+            new Point(1000, 300),
             new Point(1200,500)
     );
 
@@ -107,10 +107,12 @@ public class pipeline_test extends OpenCvPipeline {
 //            Imgproc.cvtColor(input, grey, Imgproc.COLOR_RGB2GRAY);
 
         // i wanna convert the rgb values colors range into hsv
-        Imgproc.cvtColor(input, red, Imgproc.COLOR_RGB2HSV);
+        //Imgproc.cvtColor(input, red, Imgproc.COLOR_RGB2HSV);
 
         // 1; hue, 2; saturation, 3; value (check HSV image to know more)
         // the values here must be for the red team prop
+        Imgproc.cvtColor(input, red, Imgproc.COLOR_RGB2HSV);
+
         Scalar lowHSV = new Scalar(150, 100, 100);
         Scalar highHSV = new Scalar(180, 255, 255);
 
@@ -122,15 +124,13 @@ public class pipeline_test extends OpenCvPipeline {
         Mat mid = red.submat(midSpike);
         Mat right = red.submat(rightSpike);
 
-        // convert to rgb to draw the rects
-        Imgproc.cvtColor(input, red, Imgproc.COLOR_HSV2RGB);
-
-        // draw the box on the left spike
+        // the box on the left spike
+        //Imgproc.cvtColor(input, red, Imgproc.COLOR_HSV2BGR);
         Imgproc.rectangle(
                 input,
                 leftSpike.tl(),  // Top-left corner of the rectangle
                 leftSpike.br(),  // Bottom-right corner of the rectangle
-                new Scalar(0, 246, 0),  // Green color
+                new Scalar(0, 54, 0),  // Green color (BGR values)
                 2  // Thickness of the rectangle border
         );
 
@@ -139,7 +139,7 @@ public class pipeline_test extends OpenCvPipeline {
                 input,
                 midSpike.tl(),  // Top-left corner of the rectangle
                 midSpike.br(),  // Bottom-right corner of the rectangle
-                new Scalar(0, 246, 0),  // Green color
+                new Scalar(0, 54, 0),  // Green color (BGR values)
                 2  // Thickness of the rectangle border
         );
 
@@ -148,14 +148,12 @@ public class pipeline_test extends OpenCvPipeline {
                 input,
                 rightSpike.tl(),  // Top-left corner of the rectangle
                 rightSpike.br(),  // Bottom-right corner of the rectangle
-                new Scalar(0, 246, 0),  // Green color
+                new Scalar(0, 54, 0),  // Green color (BGR values)
                 2  // Thickness of the rectangle border
         );
 
-//            Imgproc.rectangle(input, leftSpike, new Scalar(0, 255, 0), 10); // can be used if the draw rect methods above didnt work
-
         // colors back to HSV
-        Imgproc.cvtColor(input, red, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(input, red, Imgproc.COLOR_BGR2HSV);
 
 
         // idk sth about calculating the white area of the object or sth, just gotta write it for now (to check what percentage of the matrix became white)
@@ -177,6 +175,11 @@ public class pipeline_test extends OpenCvPipeline {
         telemetry.addData("mid percentage", Math.round(midValue * 100) + "%");
         telemetry.addData("right percentage", Math.round(rightValue * 100) + "%");
         telemetry.update();
+
+        // release, yay
+        left.release();
+        mid.release();
+        right.release();
 
 
         // if the team prop's value's thresholder is higher than the lowest val we defined above, then it is a team prop
@@ -201,8 +204,8 @@ public class pipeline_test extends OpenCvPipeline {
         telemetry.update();
 
 
-        return red; // Return the image that will be displayed in the viewport
-        // (In this case the input mat directly) - wrong, in the skystone code they returned the "mat" not the whole input.
+        return input; // Return the image that will be displayed in the viewport
+        // (In this case the input mat directly)
 
     }
 
