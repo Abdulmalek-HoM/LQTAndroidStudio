@@ -60,19 +60,19 @@ public class hdMotor1test extends LinearOpMode {
             }
         });
 
-        if (tp_dudu == 1) {
-            telemetry.addData("pos deteceted: ", tp_dudu+" = left zone");
-            telemetry.update();
+//        if (tp_dudu == 1) {
+  //          telemetry.addData("pos deteceted: ", tp_dudu+" = left zone");
+    //        telemetry.update();
+//
+  //      } else if (tp_dudu == 2) {
+    //        telemetry.addData("pos detected: ", tp_dudu+" = mid zone");
+      //      telemetry.update();
 
-        } else if (tp_dudu == 2) {
-            telemetry.addData("pos detected: ", tp_dudu+" = mid zone");
-            telemetry.update();
+        //} else {
+          //  telemetry.addData("pos detected: ", tp_dudu+" = right zone");
+            //telemetry.update();
 
-        } else {
-            telemetry.addData("pos detected: ", tp_dudu+" = right zone");
-            telemetry.update();
-
-        }
+ //       }
 
         waitForStart();
 
@@ -84,21 +84,21 @@ public class hdMotor1test extends LinearOpMode {
                 SlideL.setTargetPosition(500);
                 SlideL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 SlideL.setPower(0.2);
-                telemetry.addLine("we're moving forward");
+                telemetry.addLine("Left Zone we're moving 500 ticks");
                 telemetry.update();
 
             } else if (tp_dudu == 2) {
                 SlideL.setTargetPosition(2000);
                 SlideL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 SlideL.setPower(0.2);
-                telemetry.addLine("we're moving rückwärts");
+                telemetry.addLine("Mid Zone we're moving 2000 ticks ");
                 telemetry.update();
 
             } else {
                 SlideL.setTargetPosition(5000);
                 SlideL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 SlideL.setPower(0.2);
-                telemetry.addLine("Achtung! we will move forwards and backwords");
+                telemetry.addLine("Right Zone Achtung! we will move 5000 ticks");
                 telemetry.update();
 
             }
